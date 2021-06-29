@@ -37,7 +37,7 @@ describe("login", () => {
       expect(limiter.removeToken()).toBe(false)
     })
   })
-  describe.only("/", () => {
+  describe("/login", () => {
     let _codeServer: httpserver.HttpServer | undefined
     function codeServer(): httpserver.HttpServer {
       if (!_codeServer) {
@@ -60,20 +60,18 @@ describe("login", () => {
       process.env.PASSWORD = previousEnvPassword
     })
 
-    // TODO@jsjoeio fix this name of test
-    it("should return an error", async () => {
-      const resp = await codeServer().fetch("/", { method: "POST" })
-      // TODO@jsjoeio um not sure why we are getting a 404
-      expect(resp.status).toBe(404)
+    it("should return escaped HTML with 'Missing password' message", async () => {
+      const resp = await codeServer().fetch("/login", { method: "POST" })
 
-      try {
-        const content = JSON.parse(await resp.text())
+      expect(resp.status).toBe(200)
 
-        expect(content.error).toMatch("ENOENT")
-      } catch (error) {
-        console.log("heree")
-        console.error(error)
-      }
+      const htmlContent = await resp.text()
+
+      expect(htmlContent).not.toContain(">")
+      expect(htmlContent).not.toContain("<")
+      expect(htmlContent).not.toContain('"')
+      expect(htmlContent).not.toContain("'")
+      expect(htmlContent).toContain("&lt;div class=&quot;error&quot;&gt;Missing password&lt;/div&gt;")
     })
   })
 })

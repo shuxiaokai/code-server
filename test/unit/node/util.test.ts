@@ -435,9 +435,9 @@ describe("onLine", () => {
   })
 })
 
-describe("escapeHTML", () => {
+describe("escapeHtml", () => {
   it("should escape HTML", () => {
-    expect(util.escapeHTML(`<div class="error">"Hello & world"</div>`)).toBe(
+    expect(util.escapeHtml(`<div class="error">"Hello & world"</div>`)).toBe(
       "&lt;div class=&quot;error&quot;&gt;&quot;Hello &amp; world&quot;&lt;/div&gt;",
     )
   })

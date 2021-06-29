@@ -515,7 +515,7 @@ export const isFile = async (path: string): Promise<boolean> => {
  *
  * Source: https://stackoverflow.com/a/6234804/3015595
  **/
-export function escapeHTML(unsafe: string): string {
+export function escapeHtml(unsafe: string): string {
   return unsafe
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
