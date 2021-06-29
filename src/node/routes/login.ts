@@ -36,6 +36,10 @@ const getRoot = async (req: Request, error?: Error): Promise<string> => {
   } else if (req.args.usingEnvHashedPassword) {
     passwordMsg = "Password was set from $HASHED_PASSWORD."
   }
+
+  if (error) {
+    console.log("there is an error", error.message)
+  }
   return replaceTemplates(
     req,
     content
